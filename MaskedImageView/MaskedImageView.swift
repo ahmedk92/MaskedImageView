@@ -19,9 +19,24 @@ class MaskedImageView: UIImageView {
         let rect = CGRect(origin: center.applying(CGAffineTransform(translationX: -sideLength / 2, y: -sideLength / 2)), size: CGSize(width: sideLength, height: sideLength))
         l.path = UIBezierPath(roundedRect: rect, cornerRadius: sideLength / 4).cgPath
         
-        l.transform = CATransform3DMakeRotation(.pi / 4, 0, 0, 1)
+        l.transform = CATransform3DMakeRotation(angle, 0, 0, 1)
         
         return l
+    }
+    
+    private var angle: CGFloat = 0 {
+        didSet {
+            setNeedsLayout()
+        }
+    }
+    
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        
+        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] (_) in
+            guard let self = self else { return }
+            self.angle = (self.angle + 0.01).truncatingRemainder(dividingBy: .pi * 2)
+        }
     }
     
     override func layoutSubviews() {

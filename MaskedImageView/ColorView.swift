@@ -17,6 +17,21 @@ class ColorView: UIView {
         return l
     }
     
+    private var angle: CGFloat = 0 {
+        didSet {
+            transform = CGAffineTransform(rotationAngle: angle)
+        }
+    }
+    
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        
+        Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { [weak self] (_) in
+            guard let self = self else { return }
+            self.angle = (self.angle - 0.01).truncatingRemainder(dividingBy: .pi * 2)
+        }
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         layer.mask = maskLayer
