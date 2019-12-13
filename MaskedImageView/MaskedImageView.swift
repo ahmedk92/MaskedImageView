@@ -14,7 +14,7 @@ class MaskedImageView: UIImageView {
         l.frame = self.layer.bounds
         l.backgroundColor = UIColor.clear.cgColor
         
-        let sideLength = min(self.bounds.size.width, self.bounds.size.height) / 2
+        let sideLength = min(self.bounds.size.width, self.bounds.size.height) * 0.8
         let center = convert(self.center, from: self.superview!)
         let rect = CGRect(origin: center.applying(CGAffineTransform(translationX: -sideLength / 2, y: -sideLength / 2)), size: CGSize(width: sideLength, height: sideLength))
         l.path = UIBezierPath(roundedRect: rect, cornerRadius: sideLength / 4).cgPath
