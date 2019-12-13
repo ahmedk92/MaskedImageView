@@ -9,7 +9,7 @@
 import UIKit
 
 class MaskedImageView: UIImageView {
-    private lazy var maskLayer: CALayer = {
+    private var maskLayer: CALayer {
         let l = CAShapeLayer()
         l.frame = self.layer.bounds
         l.backgroundColor = UIColor.clear.cgColor
@@ -22,13 +22,11 @@ class MaskedImageView: UIImageView {
         l.transform = CATransform3DMakeRotation(.pi / 4, 0, 0, 1)
         
         return l
-    }()
+    }
     
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        if maskLayer.superlayer == nil {
-            layer.mask = maskLayer
-        }
+        layer.mask = maskLayer
     }
 }
